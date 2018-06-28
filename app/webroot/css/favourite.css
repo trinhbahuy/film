@@ -1,0 +1,37 @@
+
+.favourite {
+    unicode-bidi: bidi-override;
+    direction: rtl;
+    width: 9em;
+}
+
+.favourite input {
+    position: absolute;
+    left: -999999px;
+}
+
+.favourite label {
+    display: inline-block;
+    font-size: 0;
+}
+
+.favourite > label:before {
+    position: relative;
+    font: 24px/1 FontAwesome;
+    display: block;
+    content: "\f004";
+    color: #ccc;
+    background: -webkit-linear-gradient(-45deg, #d9d9d9 0%, #b3b3b3 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.favourite > label:hover:before,
+.favourite > label:hover ~ label:before,
+.favourite > label.selected:before,
+.favourite > label.selected ~ label:before {
+    color: #F70707;
+    background: -webkit-linear-gradient(-45deg, #B4449A 0%, #C83266 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
