@@ -5,6 +5,7 @@
       <?php
          echo $this->Html->script('jquery.min');
            echo $this->Html->script('plugins/jquery-validate/jquery.validate');
+          echo $this->Html->script('logs');
          echo $this->Html->css('bootstrap.min');
          echo $this->Html->css('style');
          echo $this->Html->css('rating.css');
