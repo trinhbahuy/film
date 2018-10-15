@@ -3,8 +3,8 @@
   <div class="row">
     <div class="col-md-6 film-avatar">
         <img class="card-img-bottom" src= "<?php echo $this->webroot.'img/film_avatar/'. $film['Film']['avatar']; ?>" alt="Film Image" style="border: 10px solid white;" id="film_img">
-        <a href="/film_hunter/pages/movie/<?php echo $film['Film']['id']; ?>"><img src="<?php echo $this->webroot.'img/play_icon.png' ?>" alt="play icon" id="play_icon"></a>
-        <a href="/film_hunter/pages/movie/<?php echo $film['Film']['id']; ?>" class="btn btn-info btn-block">Watch</a>
+        <a class="film" href="/film_hunter/pages/movie/<?php echo $film['Film']['id']; ?>"><img src="<?php echo $this->webroot.'img/play_icon.png' ?>" alt="play icon" id="play_icon"></a>
+        <a class="film" href="/film_hunter/pages/movie/<?php echo $film['Film']['id']; ?>" class="btn btn-info btn-block">Watch</a>
     </div>
     <div class="col-md-6">
         <div class="card film-information">
@@ -43,10 +43,10 @@
     <?php foreach($related_films as $key => $related_film) { ?>
         <div class="col-lg-3 col-md-4 col-sm-6 portfolio-item">
           <div class="card h-100">
-            <a href="/film_hunter/films/preview/<?php echo $related_film['id']; ?>"><img class="card-img-top" src= <?php echo $this->webroot.'img/film_avatar/'. $related_film['avatar']; ?> alt=""></a>
+            <a class="film" href="/film_hunter/films/preview/<?php echo $related_film['id']; ?>"><img class="card-img-top" src= <?php echo $this->webroot.'img/film_avatar/'. $related_film['avatar']; ?> alt=""></a>
             <div class="card-body">
               <h4 class="card-title">
-                <a href="/film_hunter/films/preview/<?php echo $related_film['id']; ?>"><?php echo $related_film['name']; ?></a>
+                <a class="film" href="/film_hunter/films/preview/<?php echo $related_film['id']; ?>"><?php echo $related_film['name']; ?></a>
               </h4>
               <p class="card-text" >
                 <?php echo substr($related_film['content'], 0, 130) ?><?php echo strlen($related_film['content']) > 130 ? "..." : "" ?>

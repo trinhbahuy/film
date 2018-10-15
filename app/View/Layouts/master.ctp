@@ -16,6 +16,7 @@
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
    </head>
    <body>
+   <input type="hidden" id="user_id" value="<?php echo AuthComponent::user('id'); ?>">
       <div id="main">
          <header>
             <div class="top0">

@@ -4,7 +4,7 @@
         <video controls style="width: 100%; height: 411px;">
             <source src= <?php echo $this->webroot.'movie/'. $film['Film']['movie']?> type="video/mp4">
         </video>
-        <input type="hidden" id="user_id" value="<?php echo AuthComponent::user('id'); ?>">
+
         <input type="hidden" id="film_id" value="<?php echo $film['Film']['id']; ?>">
         <input type="hidden" id="star_point" value="<?php echo $film['Film']['average_rate']; ?>">
         <input type="hidden" id="favourite" value="<?php if(isset($favourite['Favourite']['favourite'])){
