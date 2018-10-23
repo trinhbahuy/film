@@ -12,20 +12,25 @@ class LogsController extends AppController{
         $user_name = $this->User->findById($user_id)['User']['name'];
         $film_name = $this->Film->findById($film_id)['Film']['name'];
         $seen = $this->Log->find("first", array('conditions' => array('Log.user_id' => $user_id, 'Log.film_id' => $film_id)));
+        $rate = $this->Rate->find("first", array('conditions' => array('Rate.user_id' => $user_id, 'Rate.film_id' => $film_id)))['Rate']['point'];
+        $play = $this->request->data('play')?1:'';
         if($user_id) {
             if($seen){
 //                pr($seen);
 //                exit;
                 $this->Log->read(null, $seen['Log']['id']);
-                $this->Log->set(array(
-                    'rate' => $this->request->data('point'),
-                    'play' => $this->request->data('play')?1:0,
-                ));
+                if($seen['Log']['play'])
+                    $this->Log->set(array(
+                        'rate' => $rate,
+                    ));
+                else
+                    $this->Log->set(array(
+                        'rate' => $rate,
+                        'play' => $play,
+                    ));
                 $this->Log->save();
             }
             else {
-                $rate = $this->Rate->find("first", array('conditions' => array('Rate.user_id' => $user_id, 'Rate.film_id' => $film_id)))['Rate']['point'];
-                $play = $this->request->data('play')?1:0;
                 $this->Log->create();
                 $this->Log->set(array(
                         'user_id' => $user_id,
