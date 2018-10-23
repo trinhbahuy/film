@@ -557,8 +557,10 @@
        });
 
       $("video").one("play", function (e) {
+          var play = 1;
         var views = Number($("#views").val()) + 1;
         var film_id = $("#film_id").val();
+          var user_id = $('#user_id').val();
         $.ajax({
             method: 'POST',
             url: '/film_hunter/films/view',
@@ -567,6 +569,14 @@
             }).done(function(data){
               console.log(data);
               });
+          $.ajax({
+              method: 'POST',
+              url: '/film_hunter/logs/write',
+              data: {user_id: user_id, film_id: film_id, play: play},
+              //dataType: 'json'
+          }).done(function(data){
+              console.log(data);
+          });
       });
       
   });

@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    $(".film").click(function () {
+    $(".film").click(function (e) {
         //e.preventDefault();
         //var film_name = $(this).text();
         var user_id = $('#user_id').val();
