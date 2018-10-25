@@ -5,6 +5,10 @@ class LogsController extends AppController{
     public $uses = array('Log','User','Rate','Film');
     public $helpers = array('Form', 'Html');
 
+    public function test(){
+        $this->autoRender = false;
+        pr($this->Log->find('all',array('conditions' => array('Log.user_name' => 'huy'))));
+    }
     public function write(){
         $this->autoRender = false;
         $user_id = $this->request->data('user_id');
@@ -12,7 +16,7 @@ class LogsController extends AppController{
         $user_name = $this->User->findById($user_id)['User']['name'];
         $film_name = $this->Film->findById($film_id)['Film']['name'];
         $seen = $this->Log->find("first", array('conditions' => array('Log.user_id' => $user_id, 'Log.film_id' => $film_id)));
-        $rate = $this->Rate->find("first", array('conditions' => array('Rate.user_id' => $user_id, 'Rate.film_id' => $film_id)))['Rate']['point'];
+        $rate = $this->request->data('point')?$this->request->data('point'):$this->Rate->find("first", array('conditions' => array('Rate.user_id' => $user_id, 'Rate.film_id' => $film_id)))['Rate']['point'];
         $play = $this->request->data('play')?1:'';
         if($user_id) {
             if($seen){

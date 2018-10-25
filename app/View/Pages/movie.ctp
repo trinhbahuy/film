@@ -354,6 +354,15 @@
                         }
                     }
                 });
+                $.ajax({
+                    method: 'POST',
+                    url: '/film_hunter/logs/write',
+                    data: {point: point, user_id: user_id, film_id: film_id},
+                    //dataType: 'json',
+                    success: function(data) {
+
+                    }
+                });
             }
         });
         var favourite = $("#favourite").val();
