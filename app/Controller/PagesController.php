@@ -19,6 +19,7 @@
  */
 
 App::uses('AppController', 'Controller');
+App::uses('Recommend', 'Vendor');
 
 /**
  * Static content controller
@@ -39,7 +40,7 @@ class PagesController extends AppController {
 	public $paginate = array(
         'limit' => 4
     	);
-	public $uses = array('Category','Film','Rate','Favourite', 'Post', 'User', 'Request');
+	public $uses = array('Category','Film','Rate','Favourite', 'Post', 'User', 'Request','Log');
 
 /**
  * Displays a view
@@ -111,7 +112,29 @@ class PagesController extends AppController {
 		);
 	}
 
+    public function recommend($person){
+        $this->autoRender = false;
+        $films = array();
+        $re = new Recommend();
+
+        //pr($this->Log->find('all', array('conditions' => array('Log.user_name' => 'huy'))));
+        $user_names = $this->Log->find('all', array('fields' => array('DISTINCT Log.user_name')));
+        foreach ($user_names as $user_name){
+            $films[$user_name['Log']['user_name']] = array();
+            $cares = $this->Log->find('all', array('conditions' => array('Log.user_name' => $user_name['Log']['user_name'])));
+            foreach ($cares as $care){
+                $films[$user_name['Log']['user_name']][$care['Log']['film_name']] = $care['Log']['rate'];
+            }
+        }
+        //pr($films);
+        return $re->getRecommendations($films, $person);
+    }
+
 	public function movie(){
+//        $this->autoRender = false;
+//        pr($this->recommend(AuthComponent::user('name')));
+//        pr(AuthComponent::user('name'));
+//        exit;
 		$this->layout = 'master';
 		$id = $this->params['pass'][0];
 		$this->set('categoriess', array_chunk($this->Category->find('all'),4));
@@ -129,12 +152,13 @@ class PagesController extends AppController {
 				)
 			)	
 		);
-		$this->set('random_films', $this->Film->find('all', array( 
-				   'order' => 'rand()',
-				   'limit' => 4,
-				)
-			)
-		);
+		//$this->set('recommands', $this->recommend(AuthComponent::user('name')));
+        $this->set('random_films', $this->Film->find('all', array(
+                'order' => 'rand()',
+                'limit' => 4,
+            )
+        )
+        );
 		$this->set('new_films', $this->Film->find('all', array(
 					"fields" => array("Film.id, Film.name"),
 		        	"order" => array("Film.created_at" => "desc"),

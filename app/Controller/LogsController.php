@@ -1,5 +1,5 @@
 <?php
-
+App::uses('Recommend', 'Vendor');
 class LogsController extends AppController{
     public $name = 'Logs';
     public $uses = array('Log','User','Rate','Film');
@@ -7,7 +7,20 @@ class LogsController extends AppController{
 
     public function test(){
         $this->autoRender = false;
-        pr($this->Log->find('all',array('conditions' => array('Log.user_name' => 'huy'))));
+        $films = array();
+        $re = new Recommend();
+
+        //pr($this->Log->find('all', array('conditions' => array('Log.user_name' => 'huy'))));
+        $user_names = $this->Log->find('all', array('fields' => array('DISTINCT Log.user_name')));
+        foreach ($user_names as $user_name){
+            $films[$user_name['Log']['user_name']] = array();
+            $cares = $this->Log->find('all', array('conditions' => array('Log.user_name' => $user_name['Log']['user_name'])));
+            foreach ($cares as $care){
+                $films[$user_name['Log']['user_name']][$care['Log']['film_name']] = $care['Log']['rate'];
+            }
+        }
+        pr($films);
+        pr($re->getRecommendations($films, "new user 24"));
     }
     public function write(){
         $this->autoRender = false;
