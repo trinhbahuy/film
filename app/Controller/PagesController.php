@@ -113,7 +113,6 @@ class PagesController extends AppController {
 	}
 
     public function recommend($person){
-        $this->autoRender = false;
         $films = array();
         $re = new Recommend();
 
@@ -127,14 +126,15 @@ class PagesController extends AppController {
             }
         }
         //pr($films);
-        return $re->getRecommendations($films, $person);
+        $rev1 = $re->getRecommendations($films, $person);
+        $re_final = array();
+        foreach ($rev1 as $film=>$rate){
+            array_push($re_final, $this->Film->find('first', array('conditions' => array('Film.name' => $film))));
+        }
+        return $re_final;
     }
 
 	public function movie(){
-//        $this->autoRender = false;
-//        pr($this->recommend(AuthComponent::user('name')));
-//        pr(AuthComponent::user('name'));
-//        exit;
 		$this->layout = 'master';
 		$id = $this->params['pass'][0];
 		$this->set('categoriess', array_chunk($this->Category->find('all'),4));
@@ -152,13 +152,13 @@ class PagesController extends AppController {
 				)
 			)	
 		);
-		//$this->set('recommands', $this->recommend(AuthComponent::user('name')));
-        $this->set('random_films', $this->Film->find('all', array(
-                'order' => 'rand()',
-                'limit' => 4,
-            )
-        )
-        );
+		$this->set('recommands', $this->recommend(AuthComponent::user('name')));
+//        $this->set('random_films', $this->Film->find('all', array(
+//                'order' => 'rand()',
+//                'limit' => 4,
+//            )
+//        )
+//        );
 		$this->set('new_films', $this->Film->find('all', array(
 					"fields" => array("Film.id, Film.name"),
 		        	"order" => array("Film.created_at" => "desc"),

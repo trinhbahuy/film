@@ -20,7 +20,7 @@ class LogsController extends AppController{
             }
         }
         pr($films);
-        pr($re->getRecommendations($films, "new user 24"));
+        pr($re->getRecommendations($films, "huy"));
     }
     public function write(){
         $this->autoRender = false;

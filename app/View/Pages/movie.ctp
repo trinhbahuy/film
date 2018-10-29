@@ -184,19 +184,18 @@
 <div class="container">
   <h3>You may like ?</h3>
   <div class="row col-lg-12">
-
-   <?php foreach($random_films as $film): ?>
+      <?php foreach($recommands as $recommand): ?>
       <div class="col-md-3 col-sm-6 mb-4 one-film">
-        <a href="/film_hunter/pages/movie/<?php echo $film['Film']['id']; ?>"><img style="width: 280px; height: 250px;"class="img-fluid" src= <?php echo $this->webroot.'img/film_avatar/'. $film['Film']['avatar']; ?>  >
+        <a href="/film_hunter/pages/movie/<?php echo $recommand['Film']['id']; ?>"><img style="width: 280px; height: 250px;"class="img-fluid" src= <?php echo $this->webroot.'img/film_avatar/'. $recommand['Film']['avatar']; ?>  >
         </a>
-        <div class="name-film"> 
-            <h5> <?php echo $film['Film']['name']?> </h5>  
-            <strong style="float: right;"> 
-            <?php 
-                for($i=1; $i<=5; $i++){ 
-                    if($i <= $film['Film']['average_rate'])
+        <div class="name-film">
+            <h5> <?php echo $recommand['Film']['name']?> </h5>
+            <strong style="float: right;">
+            <?php
+                for($i=1; $i<=5; $i++){
+                    if($i <= $recommand['Film']['average_rate'])
                         echo "<span><i class='text-warning fa fa-star'></i></span>";
-                    else 
+                    else
                         echo "<span><i class='text-warning fa fa-star-o'></i></span>";
                 }
             ?>
