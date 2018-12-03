@@ -71,8 +71,8 @@
 					    	$filenamemovie = $this->request->data['Film']['movie']['name'];
 							$extavatar = strtolower(substr(strrchr($filenameavatar, '.'), 1));
 							$extmovie = strtolower(substr(strrchr($filenamemovie, '.'), 1));
-							$avatar_name = $filenameavatar . '.' . $ext;
-							$movie_name = $filenamemovie . '.' . $ext;
+							$avatar_name = $filenameavatar . '.' . $extavatar;
+							$movie_name = $filenamemovie . '.' . $extmovie;
 							$uploadFileAvatar = $uploadPathAvatar.$avatar_name;
 							$uploadFileMovie = $uploadPathAvatar.$movie_name;
 							move_uploaded_file($this->request->data['Film']['avatar']['tmp_name'], $uploadFileAvatar);

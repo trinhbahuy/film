@@ -69,7 +69,7 @@ $(document).ready(function() {
                 release_year: {
                     required: true,
                     number: true,
-                    range: [1990, 2017]
+                    range: [1990, 2019]
                 }
             },
             messages: {

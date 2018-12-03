@@ -36,7 +36,7 @@
                      <i class="glyphicon glyphicon-user"></i>
                      <span><?php echo $admin['name']; ?> <i class="caret"></i></span>
                      </a>
-                     <ul class="dropdown-menu" style="margin-top: 260px; margin-right: -27px;">
+                     <ul class="dropdown-menu" style="margin-right: -27px;">
                         <!-- User image -->
                         <li class="user-header bg-light-blue">
                            <img src= <?php echo $this->webroot.'img/avatar.png' ?> alt="" class="img-circle" alt="User Image" />
