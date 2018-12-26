@@ -4,6 +4,8 @@ $(document).ready(function () {
         //var film_name = $(this).text();
         var user_id = $('#user_id').val();
         var film_id = $(this).attr("href").match(/\d+/)[0];
+        console.log(user_id);
+        console.log(film_id);
         //console.log(film_id);
         $.ajax({
             method: 'POST',

@@ -13,7 +13,7 @@
            echo $this->Html->css('like_button.css');
          ?>
       <link rel="short icon" href="<?php echo $this->webroot.'/img/logo.png'; ?>">
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
    </head>
    <body>
    <input type="hidden" id="user_id" value="<?php echo AuthComponent::user('id'); ?>">

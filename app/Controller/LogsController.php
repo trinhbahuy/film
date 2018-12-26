@@ -36,6 +36,7 @@ class LogsController extends AppController{
 //                pr($seen);
 //                exit;
                 $this->Log->read(null, $seen['Log']['id']);
+                if($rate == null) $rate = 2.5;
                 if($seen['Log']['play'])
                     $this->Log->set(array(
                         'rate' => $rate,

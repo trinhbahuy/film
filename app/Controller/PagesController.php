@@ -209,7 +209,199 @@ class PagesController extends AppController {
 		$this->set('yearss', array_chunk($this->Film->query("SELECT DISTINCT release_year FROM films ORDER BY release_year desc"),4));
 	    $this->set('top_views', $top_views);
 	}
-	public function admin_dashboard()
+    public function search()
+    {
+        $this->layout = 'master';
+        $this->set('new_films', $this->Film->find('all', array(
+                "fields" => array("Film.id, Film.name"),
+                "order" => array("Film.created_at" => "desc"),
+                "limit" => 4,
+                'recursive' => -1
+            )
+        )
+        );
+        $this->set('categoriess', array_chunk($this->Category->find('all'),4));
+        $this->set('yearss', array_chunk($this->Film->query("SELECT DISTINCT release_year FROM films"),4));
+
+        if ($this->request->is('post')) {
+            $searchstr = $this->request->data['Film']['search'];
+            if ($searchstr != '') {
+                $results = $this->Film->find('count', array(
+                        'conditions' => array(
+                            'or' => array(
+                                "Film.name LIKE" => "%$searchstr%",
+                                "Film.content LIKE" => "%$searchstr%",
+                                "Film.director LIKE" => "%$searchstr%",
+                                "Film.release_year LIKE" => "%$searchstr%",
+                            )
+                        )
+                    )
+                );
+                if ($this->Session->check('searchstr') && $this->Session->check('results')) {
+                    $this->Session->delete('searchstr');
+                    $this->Session->delete('results');
+                    $this->Session->write('searchstr', $searchstr);
+                    $this->Session->write('results', $results);
+                }
+            } else {
+                $this->redirect('/pages/index');
+            }
+        }
+        if ($this->Session->check('searchstr') && $this->Session->check('results')) {
+            $searchstr = $this->Session->read('searchstr');
+            $results = $this->Session->read('results');
+        }
+
+        if ($searchstr != '') {
+            $this->paginate = array(
+                'conditions' => array(
+                    'or' => array(
+                        "Film.name LIKE" => "%$searchstr%",
+                        "Film.content LIKE" => "%$searchstr%",
+                        "Film.director LIKE" => "%$searchstr%",
+                        "Film.release_year LIKE" => "%$searchstr%",
+                    )
+                ),
+                'limit' => 4
+            );
+            $this->Session->write('searchstr', $searchstr);
+            $this->Session->write('results', $results);
+
+            $films = $this->paginate('Film');
+            $this->set('films', $films);
+        }
+    }
+    public function category(){
+        $this->layout = 'master';
+        $id = $this->params['pass'][0];
+        $this->set('new_films', $this->Film->find('all', array(
+                "fields" => array("Film.id, Film.name"),
+                "order" => array("Film.created_at" => "desc"),
+                "limit" => 4,
+                'recursive' => -1
+            )
+        )
+        );
+        $this->set('categoriess', array_chunk($this->Category->find('all'),4));
+        $this->set('yearss', array_chunk($this->Film->query("SELECT DISTINCT release_year FROM films ORDER BY release_year desc"),4));
+        $cate = $this->Category->find('all', array('conditions' => array('id' => $id)));
+        $this->set('films_with_same_category', $cate[0]['Film']);
+        $this->set('categories', $this->Category->find('all'));
+    }
+
+    public function year(){
+        $this->layout = 'master';
+        $year = $this->params['pass'][0];
+        $this->set('new_films', $this->Film->find('all', array(
+                "fields" => array("Film.id, Film.name"),
+                "order" => array("Film.created_at" => "desc"),
+                "limit" => 4,
+                'recursive' => -1
+            )
+        )
+        );
+        $this->set('categoriess', array_chunk($this->Category->find('all'),4));
+        $this->set('yearss', array_chunk($this->Film->query("SELECT DISTINCT release_year FROM films ORDER BY release_year desc"),4));
+        $this->set('films_with_same_year', $this->Film->find("all", array("conditions" => array('Film.release_year' => $year))));
+    }
+
+    public function preview($id = null) {
+        $this->layout = 'master';
+        $this->set('categoriess', array_chunk($this->Category->find('all'),4));
+        $this->set('yearss', array_chunk($this->Film->query("SELECT DISTINCT release_year FROM films ORDER BY release_year desc"),4));
+        $this->set('new_films', $this->Film->find('all', array(
+                "fields" => array("Film.id, Film.name"),
+                "order" => array("Film.created_at" => "desc"),
+                "limit" => 4,
+                'recursive' => -1
+            )
+        )
+        );
+        if (!$id) {
+            throw new NotFoundException(__('Invalid film'));
+        }
+        $film = $this->Film->findById($id);
+        $cat_ids = $this->Film->find("all", array(
+                "joins" => array(
+                    array(
+                        "table" => "category_film",
+                        "alias" => "CategoryFilm",
+                        "conditions" => array(
+                            "Film.id = CategoryFilm.film_id"
+                        )
+                    )
+                ),
+                "conditions" => array("Film.id" => $id),
+                "fields" => array("CategoryFilm.category_id"),
+                "recursive" => -1
+            )
+        );
+        foreach ($cat_ids as $item) {
+            $ids[] = $item["CategoryFilm"]["category_id"];
+        }
+
+        foreach ($ids as $id) {
+            $films = $this->Category->find("all", array(
+                    "joins" => array(
+                        array(
+                            "table" => "category_film",
+                            "alias" => "CategoryFilm",
+                            "conditions" => array(
+                                "Category.id = CategoryFilm.category_id"
+                            )
+                        ),
+                        array(
+                            "table" => "films",
+                            "alias" => "Film",
+                            "conditions" => array(
+                                "CategoryFilm.film_id = Film.id"
+                            )
+                        )
+                    ),
+                    "conditions" => array("Category.id" => $id),
+                    "fields" => array("Film.*, Category.*"),
+                    "recursive" => -1
+                )
+            );
+            $checkArr = array();
+            foreach($films as $item) {
+                if ($item['Film']['id'] != $film['Film']['id'] && !in_array($item['Film']['id'], $checkArr)) {
+                    array_push($checkArr, $item['Film']['id']);
+                }
+            }
+        }
+        $i = 0;
+        foreach ($checkArr as $key => $film_id) {
+            $filmsList = $this->Film->find("all", array(
+                    "conditions" => array("Film.id" => $film_id),
+                    "fields" => array("Film.*"),
+                    "recursive" => -1,
+                    "order" => array("Film.views" => "desc"),
+                )
+            );
+
+            foreach($filmsList as $item) {
+                if($i < 4) {
+                    $related_films[] = $item['Film'];
+                    $i++;
+                }
+                else
+                    break 2;
+
+            }
+        }
+        $this->set('related_films', $related_films);
+        if (!$film) {
+            throw new NotFoundException(__('Invalid film'));
+        }
+        $this->set('film', $film);
+        $this->set('average_rate', $this->Film->find('first', array(
+                'conditions' => array('Film.id' => $id)
+            )
+        )
+        );
+    }
+    public function admin_dashboard()
 	{
 		$this->layout = 'admin';
 		if(AuthComponent::user('role')){
