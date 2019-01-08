@@ -45,7 +45,7 @@
                         <div class="top1_inner clearfix">
                            <div class="logo_wrapper"><a href="index.html" class="logo"><img src="<?php echo $this->webroot.'/img/logo.png'; ?>" alt="" style="width: 250px; height: 100px;"></a></div>
                            <div class="search-form-wrapper clearfix">
-                              <form id="search-form" method="post" action="/film_hunter/films/search" class="navbar-form" >
+                              <form id="search-form" method="post" action="/film_hunter/pages/search" class="navbar-form" >
                                  <input type="text" name="data[Film][search]" placeholder="Searching films..." required>
                                  <a href="javascript:void(0)" onClick="document.getElementById('search-form').submit()"></a>
                               </form>
@@ -72,7 +72,7 @@
                                                 <?php foreach($categoriess as $categories): ?>
                                                 <tr>
                                                    <?php foreach($categories as $category): ?>
-                                                   <td> <a href="/film_hunter/films/category/<?php echo $category['Category']['id']; ?>"> <?php echo $category['Category']['category_name']; ?> </a></td>
+                                                   <td> <a href="/film_hunter/pages/category/<?php echo $category['Category']['id']; ?>"> <?php echo $category['Category']['category_name']; ?> </a></td>
                                                    <?php endforeach; ?>
                                                 </tr>
                                                 <?php endforeach; ?>
@@ -87,7 +87,7 @@
                                                 <?php foreach($yearss as $years): ?>
                                                 <tr>
                                                    <?php foreach($years as $year): ?>
-                                                   <td> <a href="/film_hunter/films/year/<?php echo $year['films']['release_year']; ?>"> <?php echo $year['films']['release_year']; ?> </a></td>
+                                                   <td> <a href="/film_hunter/pages/year/<?php echo $year['films']['release_year']; ?>"> <?php echo $year['films']['release_year']; ?> </a></td>
                                                    <?php endforeach; ?>
                                                 </tr>
                                                 <?php endforeach; ?>

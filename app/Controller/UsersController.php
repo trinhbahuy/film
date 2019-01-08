@@ -448,9 +448,19 @@
 		}
 		public function reject()
 		{
-			$id = $this->params['pass'][0];
+			$this->autoRender = false;
+			$user_id = $this->params['pass'][0];
+			$id = $this->params['pass'][1];
+			$user = $this->User->find('first', array('conditions' => array('User.id' => $user_id)));
+			$gmail = $user['User']['email'];
+			
+			App::uses('CakeEmail', 'Network/Email');
+			$email = new CakeEmail('gmail');
+			$email->to($gmail);
+			$email->from('huytb@tmh-techlab.vn');
+			$email->subject('Film Hunter Notice');
+			$email->send('Your request has been rejected because the movie was exist, please check!');
 			$this->Request->delete($id);
 			$this->redirect('/admin/films/request');
-
 		}
 	}

@@ -36,6 +36,7 @@ class PagesController extends AppController {
  *
  * @var array
  */
+    public $components = array('Session');
 	public $helpers = array('Paginator','Html');
 	public $paginate = array(
         'limit' => 4
@@ -85,7 +86,7 @@ class PagesController extends AppController {
 	
 	public function beforeFilter() {
 		    parent::beforeFilter();
-		    $this->Auth->allow('index', 'movie', 'topviews');
+		    $this->Auth->allow('index', 'movie', 'topviews','search', 'category', 'year', 'preview', 'view', 'tag');
 	}
 
 	public function index(){
@@ -152,13 +153,15 @@ class PagesController extends AppController {
 				)
 			)	
 		);
-		$this->set('recommands', $this->recommend(AuthComponent::user('name')));
-//        $this->set('random_films', $this->Film->find('all', array(
-//                'order' => 'rand()',
-//                'limit' => 4,
-//            )
-//        )
-//        );
+        if(AuthComponent::user())
+		  $this->set('recommands', $this->recommend(AuthComponent::user('name')));
+        else
+           $this->set('recommands', $this->Film->find('all', array(
+                   'order' => 'rand()',
+                   'limit' => 4,
+               )
+           )
+           );
 		$this->set('new_films', $this->Film->find('all', array(
 					"fields" => array("Film.id, Film.name"),
 		        	"order" => array("Film.created_at" => "desc"),
