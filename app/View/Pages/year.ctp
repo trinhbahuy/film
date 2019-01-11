@@ -7,7 +7,7 @@
           <?php foreach($films_with_same_year as $film): ?>
             <div class="col-lg-4 col-md-6 mb-4">
               <div class="card h-100">
-                <a href="/film_hunter/pages/movie/<?php echo $film['Film']['id']; ?>"><img class="card-img-top" src=<?php echo $this->webroot.'img/film_avatar/'. $film['Film']['avatar']?> alt=""></a>
+                <a class="film" href="/film_hunter/pages/movie/<?php echo $film['Film']['id']; ?>"><img class="card-img-top" src=<?php echo $this->webroot.'img/film_avatar/'. $film['Film']['avatar']?> alt=""></a>
                 <div class="card-body">
                   <h4 class="card-title">
                     <a href="#"><?php echo $film['Film']['name']; ?></a>

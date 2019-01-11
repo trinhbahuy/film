@@ -12,7 +12,7 @@
         <?php foreach($films as $film): ?>
           <div class="col-lg-3 col-md-4 col-sm-6 portfolio-item">
             <div class="card h-100">
-              <a href="/film_hunter/films/preview/<?php echo $film['Film']['id']; ?>"><img class="card-img-top" src= <?php echo $this->webroot.'img/film_avatar/'. $film['Film']['avatar']; ?> alt=""></a>
+              <a class="film" href="/film_hunter/films/preview/<?php echo $film['Film']['id']; ?>"><img class="card-img-top" src= <?php echo $this->webroot.'img/film_avatar/'. $film['Film']['avatar']; ?> alt=""></a>
               <div class="card-body">
                 <h4 class="card-title">
                   <a href="#"><?php echo $film['Film']['name']; ?></a>

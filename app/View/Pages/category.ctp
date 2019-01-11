@@ -6,7 +6,7 @@
         <?php foreach($films_with_same_category as $film): ?>
           <div class="col-lg-3 col-md-4 mb-4">
             <div class="card h-100">
-              <a href="/film_hunter/pages/movie/<?php echo $film['id']; ?>"><img class="card-img-top" src=<?php echo $this->webroot.'img/film_avatar/'. $film['avatar']?> alt=""></a>
+              <a class="film" href="/film_hunter/pages/movie/<?php echo $film['id']; ?>"><img class="card-img-top" src=<?php echo $this->webroot.'img/film_avatar/'. $film['avatar']?> alt=""></a>
               <div class="card-body">
                 <h4 class="card-title">
                   <a href="#"><?php echo $film['name']; ?></a>

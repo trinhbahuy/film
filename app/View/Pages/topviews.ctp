@@ -5,10 +5,10 @@
             <?php foreach($top_views as $film): ?>
             <div class="col-lg-3 col-md-6 mb-4">
                <div class="card h-100">
-                  <a href="/film_hunter/pages/movie/<?php echo $film['Film']['id']; ?>"><img class="card-img-top" src=<?php echo $this->webroot.'img/film_avatar/'. $film['Film']['avatar']?> alt=""></a>
+                  <a class="film" href="/film_hunter/pages/movie/<?php echo $film['Film']['id']; ?>"><img class="card-img-top" src=<?php echo $this->webroot.'img/film_avatar/'. $film['Film']['avatar']?> alt=""></a>
                   <div class="card-body">
                      <h4 class="card-title">
-                        <a href="/film_hunter/films/preview/<?php echo $film['Film']['id']; ?>"><?php echo $film['Film']['name']; ?></a>
+                        <a class="film" href="/film_hunter/films/preview/<?php echo $film['Film']['id']; ?>"><?php echo $film['Film']['name']; ?></a>
                      </h4>
                      <h5>IMDb: <?php echo $film['Film']['IMDb'] ?></h5>
                      <p class="card-text" >

@@ -17,7 +17,7 @@
       <td><?php echo $request['Request']['request_name']; ?></td>
       <td><?php echo $request['Request']['created_at']; ?></td>
       <td><a href="/film_hunter/users/accept/<?php echo $request['User']['id']. "/". $request['Request']['id'];?>"><button type="button" class="btn btn-primary">Accept</button></a>
-        <a href="/film_hunter/users/reject/<?php echo $request['Request']['id']; ?>"><button type="button" class="btn btn-danger">Reject</button></a>
+        <a href="/film_hunter/users/reject/<?php echo $request['User']['id']. "/". $request['Request']['id']; ?>"><button type="button" class="btn btn-danger">Reject</button></a>
       </td>
     </tr>
     <?php } ?>

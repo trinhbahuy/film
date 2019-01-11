@@ -64,7 +64,7 @@
               <p>
               <strong>Tags:</strong>
               <?php foreach($film['Tag'] as $tag) { ?>
-                <a href="/film_hunter/films/tag/<?php echo $tag['id']; ?>"><span class="badge badge-success"><?php echo $tag['tag_name']; ?></span></a>
+                <a class="film" href="/film_hunter/films/tag/<?php echo $tag['id']; ?>"><span class="badge badge-success"><?php echo $tag['tag_name']; ?></span></a>
               <?php } ?>
               </p>
             <?php } ?>
@@ -159,7 +159,7 @@
       <h4 id="top_rate">Top Rate</h4>
       <?php foreach($top_rates as $top_rate):?>
       <div class="thumbnail one-film" >
-        <a href="/film_hunter/pages/movie/<?php echo $top_rate['Film']['id']; ?>"><img class="img-fluid" src= <?php echo $this->webroot.'img/film_avatar/'. $top_rate['Film']['avatar']; ?>  style="width: 400px; height: 300px;" ></a>
+        <a class="film" href="/film_hunter/pages/movie/<?php echo $top_rate['Film']['id']; ?>"><img class="img-fluid" src= <?php echo $this->webroot.'img/film_avatar/'. $top_rate['Film']['avatar']; ?>  style="width: 400px; height: 300px;" ></a>
         <div class="name-film"> 
             <h5><?php echo $top_rate['Film']['name']?> </h5>  
             <strong style="float: right;"> 
@@ -186,7 +186,7 @@
   <div class="row col-lg-12">
       <?php foreach($recommands as $recommand): ?>
       <div class="col-md-3 col-sm-6 mb-4 one-film">
-        <a href="/film_hunter/pages/movie/<?php echo $recommand['Film']['id']; ?>"><img style="width: 280px; height: 250px;"class="img-fluid" src= <?php echo $this->webroot.'img/film_avatar/'. $recommand['Film']['avatar']; ?>  >
+        <a class="film" href="/film_hunter/pages/movie/<?php echo $recommand['Film']['id']; ?>"><img style="width: 280px; height: 250px;"class="img-fluid" src= <?php echo $this->webroot.'img/film_avatar/'. $recommand['Film']['avatar']; ?>  >
         </a>
         <div class="name-film">
             <h5> <?php echo $recommand['Film']['name']?> </h5>
@@ -212,7 +212,7 @@
 
    <?php foreach($top_views as $top_view): ?>
       <div class="col-md-3 col-sm-6 mb-4 one-film">
-        <a href="/film_hunter/pages/movie/<?php echo $top_view['Film']['id']; ?>"><img style="width: 280px; height: 250px;"class="img-fluid" src= <?php echo $this->webroot.'img/film_avatar/'. $top_view['Film']['avatar']; ?>  >
+        <a class="film" href="/film_hunter/pages/movie/<?php echo $top_view['Film']['id']; ?>"><img style="width: 280px; height: 250px;"class="img-fluid" src= <?php echo $this->webroot.'img/film_avatar/'. $top_view['Film']['avatar']; ?>  >
         </a>
         <div class="name-film"> 
             <h5><?php echo $top_view['Film']['name']?> </h5>  

@@ -36,7 +36,7 @@ class LogsController extends AppController{
 //                pr($seen);
 //                exit;
                 $this->Log->read(null, $seen['Log']['id']);
-                if($rate == null) $rate = 2.5;
+                if(!$rate) $rate = 3;
                 if($seen['Log']['play'])
                     $this->Log->set(array(
                         'rate' => $rate,
@@ -55,7 +55,7 @@ class LogsController extends AppController{
                         'user_name' => $user_name,
                         'film_id' => $film_id,
                         'film_name' => $film_name,
-                        'rate' => $rate,
+                        'rate' => 3,
                         'play' => $play,
                         'date' => date("Y-m-d"),
                     )
